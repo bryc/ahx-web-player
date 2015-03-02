@@ -210,9 +210,6 @@ function createSongList(_dirTree)
 
 window.onload = function()
 {
-    console.log(List);
-	
-
 	var all = document.createElement('span');
 	var fav = document.createElement('span');
 	
