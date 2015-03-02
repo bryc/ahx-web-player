@@ -595,7 +595,6 @@
 .\AHX\Lloyd Rosen\zak.ahx
 .\AHX\Loonie\bice.ahx
 .\AHX\Loonie\yesterday night.ahx
-.\AHX\M0d\BotB 277 m0d - Strange as Pie.ahx
 .\AHX\M0d\children of the pie.ahx
 .\AHX\M0d\chip shoulder (fixed version).ahx
 .\AHX\M0d\chip shoulder.ahx
@@ -613,6 +612,7 @@
 .\AHX\M0d\pienataur returns.ahx
 .\AHX\M0d\space pie shuffle.ahx
 .\AHX\M0d\starzest.ahx
+.\AHX\M0d\strange as pie.ahx
 .\AHX\M0d\stranger's pie.ahx
 .\AHX\M0d\streets of pie.ahx
 .\AHX\M0d\strobulated pie.ahx
@@ -1044,10 +1044,11 @@
 .\AHX\W!G\piratejingle.ahx
 .\AHX\W!G\strolling.ahx
 .\AHX\W!G\uggabugga.ahx
-.\AHX\Warlord\BotB 1825 Warlord - Sleeps with the fishes.ahx
-.\AHX\Warlord\BotB 3645 Warlord - Time lapse evening.ahx
-.\AHX\Warlord\BotB 5147 Warlord - Saturday night confusion.ahx
 .\AHX\Warlord\retrosphere.ahx
+.\AHX\Warlord\saturday night confusion.ahx
+.\AHX\Warlord\sleeps with the fishes.ahx
+.\AHX\Warlord\time lapse evening.ahx
+.\AHX\Warlord\wind riders.ahx
 .\AHX\Wiseman\happy b-day rebb.ahx
 .\AHX\Wivern\i stole deve!.ahx
 .\AHX\Wivern\skynda!.ahx
