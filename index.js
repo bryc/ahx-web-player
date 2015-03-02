@@ -6,11 +6,11 @@ var ahxMaster = AHXMaster(), ahxSong;
 //	ahxMaster.Stop();
 //    return true;
 //}
-
+if(!localStorage.favs){localStorage.favs="{}"}
 
 function addFav(e)
 {
-	if(!localStorage.favs){localStorage.favs="{}"}
+	
 	var favs = JSON.parse(localStorage.favs);
 	if(!favs[this.artist]){favs[this.artist]=[]}
 	
