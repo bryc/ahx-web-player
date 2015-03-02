@@ -122,6 +122,36 @@ function playSong()
 // This for loop iterates through the data; an object in which the keys represent the aritst names, with the property being an array of song titles.
 // We use this data to build the actual song list interface, and use the strings to reproduce valid file paths.
 
+var List = {};
+
+var buildListfromFile = function()
+{
+    var x = this.responseText.split("\r\n");
+    for (var i = 0; i < x.length; i++) {
+        if (x[i].substr(-3) == "ahx") {
+            var ap = x[i].split("AHX\\")[1].split(/\\(.+)?/);
+			
+            var artist = ap[0];
+			
+            var path = ap[1].slice(0, -4);
+			
+            if (!List[artist]) {
+                List[artist] = [];
+            }
+            List[artist].push(path);
+        }
+    }
+    createSongList(List);
+}
+
+
+var oReq = new XMLHttpRequest();
+oReq.onload = buildListfromFile;
+oReq.open("get", "dir.txt", true);
+oReq.send();
+
+
+
 function createSongList(_dirTree)
 {
 	if(typeof _dirTree=="string")
@@ -179,13 +209,14 @@ function createSongList(_dirTree)
 
 window.onload = function()
 {
-	createSongList(dirTree);
+    console.log(List);
+	
 
 	var all = document.createElement('span');
 	var fav = document.createElement('span');
 	
 	all.onclick = function(){
-		createSongList(dirTree);
+		createSongList(List);
 		all.className = "list-button selected";
 		fav.className = "list-button";
 	}
