@@ -1,0 +1,10 @@
+{
+   "name":"AHXZ",
+   "app":{
+      "launch":{
+         "local_path":"index.html"
+      }
+   },
+   "version":"0",
+   "manifest_version":2
+}

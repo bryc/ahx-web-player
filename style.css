@@ -1,0 +1,106 @@
+body {font: 14px tahoma,sans-serif}
+
+/* panel =========================== */
+#panel {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #666;
+	color: #bbb;
+	box-shadow: 0 0 26px #000;
+}
+
+/* nav */
+#nav {background: #555}
+.list-button {
+	width: 100px;
+	display: inline-block;
+	padding: 8px;
+}
+.list-button:hover {
+	cursor: pointer;
+	color: #bbb;
+	background: #666;
+}
+.list-button.selected {
+	color: #000;
+	background: #fff;
+	font-weight: 700;
+}
+
+/* song-info */
+#song-info {padding: 4px}
+#title-playing {
+	display: inline-block;
+	font-size: 24px;
+	font-weight: 700;
+	color: #fff;
+}
+
+.button {
+	font-size: 11px;
+	background: #444;
+	border-radius: 5px;
+	margin: 2px 1px;
+	padding: 3px;
+	display: inline-block;
+}
+
+.button:hover {
+	cursor: pointer;
+	color: #444;
+	background: #eee;
+}
+.button.favorited {color: #fff; background: green}
+
+/* song-list =========================== */
+#song-list {
+	-webkit-columns: 200px 9;
+	-webkit-column-gap: 8px;
+	margin: 112px 0 128px;
+}
+
+.artist-box {
+	-webkit-column-break-inside: avoid;
+	margin-bottom: 12px;
+}
+
+.artist-name {
+	font: 700 12px verdana;
+	color: #000;
+	border-bottom: 1px solid #4facfe;
+	padding: 0 0 1px;
+}
+
+.song-list {
+	overflow-y: auto;
+	max-height: 500px;
+}
+
+.song-item {
+	font-size: 11px;
+	margin-left: 8px;
+	color: #666;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 1px;
+}
+
+.song-item:hover {
+	cursor: pointer;
+	background: #f5f5f5;
+	color: #aaa;
+}
+
+.song-list.selected {outline: 2px solid #4facfe}
+.song-item.selected {
+	font-weight: 700;
+	color: #4facfe;
+	background: #eee;
+}
+
+/* other =========================== */
+::-webkit-scrollbar {background-color: #888; width: 9px}
+::-webkit-scrollbar-thumb {background-color: #4facfe}
