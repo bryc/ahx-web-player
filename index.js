@@ -16,7 +16,6 @@ function addFav(e)
 	
 	if( favs[this.artist].indexOf(this.path)=== -1  )
 	{favs[this.artist].push(this.path);this.innerHTML='unfavorite';this.onclick = unFav;this.className='button favorited';}
-	console.log(favs);
 	
 	localStorage.favs = JSON.stringify(favs);
 }
@@ -186,7 +185,6 @@ function createSongList(_dirTree)
 			
 			var songDiv = document.createElement("div"),
 				fp = _dirTree[artistName][songID];
-				//console.log(Favz[artistName]);
 				if(type==1&&Favz[artistName]!==undefined && Favz[artistName].indexOf(fp)!==-1  )
 				{
 					songDiv.style.fontWeight=700;
