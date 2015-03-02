@@ -917,6 +917,7 @@
 .\AHX\Syphus\plesiosaur.ahx
 .\AHX\Syphus\rescue pod.ahx
 .\AHX\Syphus\syphus-returns.ahx
+.\AHX\Syphus\syphus-sniffy.ahx
 .\AHX\Tang\giannasistamixsux.ahx
 .\AHX\Tang\pooppikorni.ahx
 .\AHX\Tang\ralliautot.ahx
