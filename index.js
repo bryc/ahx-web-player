@@ -38,6 +38,7 @@ function unFav()
 // playSong function. Assigned as an onClick function, this controls many things
 function playSong()
 {
+    ahxMaster.Output.pos = [0,0,0,0];
 	this.className = "song-item";
 	this.fullPath = encodeURIComponent("AHX/" + this.artist + "/" + this.filePath + ".ahx"); // encodeURIComponent to ensure every file is accessible.
 	ahxSong = new AHXSong(),
