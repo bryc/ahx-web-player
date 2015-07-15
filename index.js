@@ -83,6 +83,17 @@ function playSong()
 		
 		currentSong.appendChild(favButton);
 
+        var slider2 = document.createElement('input');
+        slider2.type = "range";
+        slider2.min = 0;
+        slider2.value = ahxMaster.Output.Player.MainVolume;
+        slider2.style.width = "64px";
+        slider2.max = 64;
+        slider2.oninput = function()
+        {
+            ahxMaster.Output.Player.MainVolume = parseInt(this.value);
+        }
+
         var slider = document.createElement('input');
         slider.type = "range";
         slider.min = 0;
@@ -107,6 +118,7 @@ function playSong()
 
         
         currentSong.appendChild(slider);
+        currentSong.appendChild(slider2);
         
         
         

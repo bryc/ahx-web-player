@@ -829,6 +829,7 @@
 .\AHX\Serpent\compofiller.ahx
 .\AHX\Serpent\jelly.ahx
 .\AHX\Serpent\revasion.ahx
+.\AHX\Serpent\streamer.ahx
 .\AHX\Setrodox\yaokee.ahx
 .\AHX\Silok\13 silok - schweinehaxe.ahx
 .\AHX\Silok\3 silok - selling_weed.ahx

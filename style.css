@@ -57,12 +57,15 @@ body {font: 14px tahoma,sans-serif}
 /* song-list =========================== */
 #song-list {
 	-webkit-columns: 200px 9;
+	-moz-columns: 200px 9;
 	-webkit-column-gap: 8px;
+	-moz-column-gap: 8px;
 	margin: 112px 0 128px;
 }
 
 .artist-box {
 	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
 	margin-bottom: 12px;
 }
 

@@ -11,6 +11,13 @@
 	this codeflow is good to preload the music (to sync with your demo)
 
 	
+
+
+	Modified Jul 14 2015 - webkitAudioContext -> AudioContext (bryc)
+	---------------------------
+  * webkitAudioContext is now depreciated, so use AudioContext
+  * Main Volume is no longer initialized on every subsong.
+
 	Modified Aug 07 2014 - A number of quick workarounds (bryc)
 	---------------------------
   * Changed createJavaScriptNode() to createScriptProcessor(). Apparently browsers no
@@ -28,7 +35,7 @@
 var toSixtyTwo = function(a){ if(a < 0) {a = 0;} else if (a > 62) { a = 62; } return a;} 
 
 function AHXMaster() {
-	if(typeof(webkitAudioContext) != 'undefined')
+	if(typeof(AudioContext) != 'undefined')
 		return new AHXMasterWebKit();
 	else if(typeof(new Audio().mozSetup) != 'undefined')
 		return new AHXMasterMoz();
@@ -565,7 +572,7 @@ function AHXPlayer(waves) {
 	return {
 		StepWaitFrames: 0, GetNewPosition: 0, SongEndReached: 0, TimingValue: 0,
 		PatternBreak: 0,
-		MainVolume: 0,
+		MainVolume: 0x40,
 		Playing: 0, Tempo: 0,
 		PosNr: 0, PosJump: 0,
 		NoteNr: 0, PosJumpNote: 0,
@@ -606,7 +613,7 @@ function AHXPlayer(waves) {
 		
 			this.PosJump = 0;
 			this.PatternBreak = 0;
-			this.MainVolume = 0x40;
+			//this.MainVolume = ;
 			this.Playing = 1;
 			this.NoteNr = this.PosJumpNote = 0;
 			this.Tempo = 6;
@@ -1297,7 +1304,7 @@ function AHXMasterWebKit(output) {
 		this.Output.Player.InitSong(song);
 		this.Output.Player.InitSubsong(0);
 		if(!this.AudioContext) 
-			this.AudioContext = new webkitAudioContext();
+			this.AudioContext = new AudioContext();
 		this.Output.Init(this.AudioContext.sampleRate, 16);
 		this.bufferSize = 8192;
 		this.bufferFull = 0;
