@@ -65,7 +65,7 @@ function AHXSong() {
 		  oXHR.onreadystatechange = function() {  
 		    if (oXHR.readyState === 4) { fCallback(oXHR); }
 		  };  
-		  oXHR.open("GET", sURL);  
+		  oXHR.open("GET", decodeURIComponent(sURL));  
 			oXHR.overrideMimeType("text/plain; charset=x-user-defined");
 			try{
 			  oXHR.send();  
