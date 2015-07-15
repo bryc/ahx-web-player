@@ -138,7 +138,8 @@ var List = {};
 
 var buildListfromFile = function()
 {
-    var x = this.responseText.split("\r\n");
+	var x = this.responseText.replace(/\r?\n/g, "\n");
+    x = x.split("\n");
     for (var i = 0; i < x.length; i++) {
         if (x[i].substr(-3) == "ahx") {
             var ap = x[i].split("AHX\\")[1].split(/\\(.+)?/);
