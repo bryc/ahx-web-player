@@ -13,6 +13,10 @@
 	
 
 
+	Modified Apr 25 2016 - decodeURIComponent -> decodeURI (bryc)
+	---------------------------
+  * decodeURIComponent will fail to open URLs with certain characters (e.g. #)
+    ---------------------------
 	Modified Jul 14 2015 - webkitAudioContext -> AudioContext (bryc)
 	---------------------------
   * webkitAudioContext is now depreciated, so use AudioContext
@@ -65,7 +69,7 @@ function AHXSong() {
 		  oXHR.onreadystatechange = function() {  
 		    if (oXHR.readyState === 4) { fCallback(oXHR); }
 		  };  
-		  oXHR.open("GET", decodeURIComponent(sURL));  
+		  oXHR.open("GET", decodeURI(sURL));  
 			oXHR.overrideMimeType("text/plain; charset=x-user-defined");
 			try{
 			  oXHR.send();  
