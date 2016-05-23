@@ -2,8 +2,8 @@
 
 A web interface demonstrating AHX playback in JS.
 Many thanks go to bartman/abyss for his AHX javascript replayer. Unfortunately it hasn't been updated
-and was only ever released [here](www.pouet.net/prod.php?which=58154)
-and [here](http://www.pouet.net/prod.php?which=58260) back in 2011. I did a number of quick patches to allow
+and was only ever released [here](http://www.pouet.net/prod.php?which=58154)
+and [here](http://www.pouet.net/prod.php?which=58260) back in 2011. I did a number of quick patches to allow hopefully
 all AHX and AHX2 files to work. If there is a newer version somewhere, let me know and I'll include it!
 
 ![Screenshot](http://i.imgur.com/Ev71EW1.png)
