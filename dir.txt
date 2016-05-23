@@ -868,6 +868,7 @@
 .\AHX\Rez\positive waves.ahx
 .\AHX\Roz\bob corni.ahx
 .\AHX\Rubik\resistance.ahx
+.\AHX\Samurai Crow\OilFilter.ahx
 .\AHX\sarkas surgery\hivelen.ahx
 .\AHX\Serpent\compofiller.ahx
 .\AHX\Serpent\jelly.ahx
@@ -876,6 +877,7 @@
 .\AHX\Setrodox\yaokee.ahx
 .\AHX\SexyElf\dicks.ahx
 .\AHX\Shinobi\EVERYTHING IS CONNECTED.ahx
+.\AHX\Shinobi\Harry, The Turtle.ahx
 .\AHX\Shinobi\Heatwave BMX.ahx
 .\AHX\Shinobi\shinobi-beach_buggy.ahx
 .\AHX\Shinobi\shinobi-flashdance.ahx
