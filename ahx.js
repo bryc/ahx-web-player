@@ -12,7 +12,10 @@
 
 	
 
-
+	Modified Oct 03 2016 - decodeURI -> decodeURIComponent (bryc)
+	---------------------------
+  * Reverting but fixing the case for #
+    ---------------------------
 	Modified Apr 25 2016 - decodeURIComponent -> decodeURI (bryc)
 	---------------------------
   * decodeURIComponent will fail to open URLs with certain characters (e.g. #)
@@ -69,7 +72,7 @@ function AHXSong() {
 		  oXHR.onreadystatechange = function() {  
 		    if (oXHR.readyState === 4) { fCallback(oXHR); }
 		  };  
-		  oXHR.open("GET", decodeURI(sURL));  
+		  oXHR.open("GET", decodeURIComponent(sURL).replace("#", "%23"));  
 			oXHR.overrideMimeType("text/plain; charset=x-user-defined");
 			try{
 			  oXHR.send();  
