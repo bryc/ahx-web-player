@@ -138,8 +138,7 @@ var List = {};
 
 var buildListfromFile = function()
 {
-	var x = this.responseText.replace(/\r?\n/g, "\n");
-    x = x.split("\n");
+	var x = JSLIST;
     for (var i = 0; i < x.length; i++) {
         if (x[i].substr(-3) == "ahx") {
             var ap = x[i].split("AHX\\")[1].split(/\\(.+)?/);
@@ -156,14 +155,6 @@ var buildListfromFile = function()
     }
     createSongList(List);
 }
-
-
-var oReq = new XMLHttpRequest();
-oReq.onload = buildListfromFile;
-oReq.open("get", "dir.txt", true);
-oReq.send();
-
-
 
 function createSongList(_dirTree)
 {
@@ -244,5 +235,5 @@ window.onload = function()
 	
 	document.getElementById("nav").appendChild(all);
 	document.getElementById("nav").appendChild(fav);
-	
+	buildListfromFile();
 }
