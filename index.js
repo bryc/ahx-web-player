@@ -138,21 +138,13 @@ var List = {};
 
 var buildListfromFile = function()
 {
-	var x = JSLIST;
-    for (var i = 0; i < x.length; i++) {
-        if (x[i].substr(-3) == "ahx") {
-            var ap = x[i].split("AHX\\")[1].split(/\\(.+)?/);
-			
-            var artist = ap[0];
-			
-            var path = ap[1].slice(0, -4);
-			
-            if (!List[artist]) {
-                List[artist] = [];
-            }
-            List[artist].push(path);
-        }
-    }
+	for (var i = 0; i < FILEZ.length; i++) {
+	    var ofs = FILEZ[i].indexOf("/");
+	    var artist = FILEZ[i].substr(0,ofs);
+	    var path   = FILEZ[i].substr(ofs+1);
+	    if(!List[artist]) {List[artist] = [];}
+	    List[artist].push(path);
+	}
     createSongList(List);
 }
 
@@ -199,7 +191,7 @@ function createSongList(_dirTree)
 			songDiv.className = "song-item";
 			songDiv.artist = artistName;  // We stash away the name of the artist as a property per-song in the element. Easier to access. 
 			songDiv.filePath = fp;        // Same for the file path. And the title (below)
-			songDiv._title = fp.slice(0, 5) !== "coop-" ? fp : fp.split("\\")[0] + " - " + fp.split("\\")[1];
+			songDiv._title = fp.slice(0, 5) !== "coop-" ? fp : fp.split("/")[0] + " - " + fp.split("/")[1];
 			songDiv.innerHTML = songDiv._title;
 			songDiv.setAttribute('title',songDiv._title)
 			songDiv.onclick = playSong;   // onClick event controls the actual playing of the song.
