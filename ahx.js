@@ -24,7 +24,7 @@
 	---------------------------
   * webkitAudioContext is now depreciated, so use AudioContext
   * Main Volume is no longer initialized on every subsong.
-
+	---------------------------
 	Modified Aug 07 2014 - A number of quick workarounds (bryc)
 	---------------------------
   * Changed createJavaScriptNode() to createScriptProcessor(). Apparently browsers no
@@ -35,7 +35,7 @@
 	toSixtyTwo() to ensure a range of 0 to 62, and applied it to both instances of
 	this.Voices[v].FilterPos-1. This issue seems to occur mostly with files in AHX2 format.
 	A good example of this is : AceMan - Jesus Stole My Jelly Beans.ahx
-  * Fixed about 10  remaining files by checking out-of-range Instrument numbers, and
+  * Fixed about 10 remaining files by checking out-of-range Instrument numbers, and
     adjusting accordingly. In ProcessStep.
   * introaac.ahx caused a unique error with track positions. I added a workaround in PlayIRQ()
 */
@@ -67,15 +67,15 @@ function AHXSong() {
 	this.Subsongs = [];
 
 	this.LoadSong = function(url, completionHandler) {
-		function loadFile(sURL, fCallback) {  
-		  var oXHR = new XMLHttpRequest();  
-		  oXHR.onreadystatechange = function() {  
-		    if (oXHR.readyState === 4) { fCallback(oXHR); }
-		  };  
-		  oXHR.open("GET", decodeURIComponent(sURL).replace("#", "%23"));  
+		function loadFile(sURL, fCallback) {
+			var oXHR = new XMLHttpRequest();
+			oXHR.onreadystatechange = function() {
+				if (oXHR.readyState === 4) { fCallback(oXHR); }
+			};
+			oXHR.open("GET", decodeURIComponent(sURL).replace("#", "%23"));
 			oXHR.overrideMimeType("text/plain; charset=x-user-defined");
 			try{
-			  oXHR.send();  
+				oXHR.send();
 			}catch(err){}
 		}
 
@@ -1541,7 +1541,7 @@ function dataType(){
 	
 	this.readByteAt = function(atPos) {
 		return parseInt(this.data[atPos].charCodeAt(0).toString(16),16)
-		return tmp;
+		//return tmp;
 	}
 	
 	this.readStringAt = function(atPos){
