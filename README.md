@@ -11,13 +11,11 @@ and [here](http://www.pouet.net/prod.php?which=58260) back in 2011. I did a numb
 ### Usage
 You'll first want to download the repository and extract the AHX folder from AHX.zip into the root directory (with the index.html).
 
-`AHX.zip` contains a collection of AHX tunes (1000+ files) from various sources, mostly Modland. 
+`AHX.7z` contains a collection of AHX tunes (1000+ files) from various sources, mostly Modland/AMP. 
 Unzip it into the /AHX/ folder to be used with the app. The song paths are stored in `dir.txt` and can be updated automatically using the included PowerShell script.
 
-<!-- NOTE2SELF: Can I generate a JS file instead of a txt to avoid the security BS? -->
-This works on Firefox and Chrome. However due to security restrictions some functionality is disabled when running locally. It runs fine under a webserver - I recommend [Mongoose](https://www.cesanta.com/products/binary) - its basically one exe that instantly starts a webserver in any folder its executed from.
+This is tested on on Firefox and Chrome. However due to browser security restrictions some functionality is disabled when running locally (i.e. running HTML file itself). It runs fine under a webserver - So host it, or use alternatives like [Mongoose](https://www.cesanta.com/products/binary) - its basically one exe that instantly starts a webserver in any folder its executed from. There are probably other apps like this, or if you have Python, use `python -m SimpleHTTPServer` in the root dir.
 
-For Chrome, you can install it as a Chrome Web App, or restart your Chrome with the flags `--allow-file-access-from-files`
-or `--disable-web-security` (check `chrome://version` to verify any set flags).
+There _are_ ways to get around this: For Chrome, you can install it as a Chrome Web App, or close & restart your Chrome with the flags `--allow-file-access-from-files` or `--disable-web-security` (check `chrome://version` to verify any set flags).
 
-In Firefox, navigate to `about:config`, and set `security.fileuri.strict_origin_policy` to `false`.
+In Firefox, it's easier: navigate to `about:config`, and set `security.fileuri.strict_origin_policy` to `false`. Hmm... apparently this isn't even required in the latest Firefox!
