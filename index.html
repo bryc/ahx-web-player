@@ -1,11 +1,295 @@
-<meta charset=utf-8>
-<script src=ahx.js></script>
-<link rel=stylesheet href=style.css>
+<script src=ahx.js></script><script src=jszip.min.js></script>
+<style>
+hr{border:0;height:1px;margin:3px 0;opacity:.5;background-image:linear-gradient(to right,rgba(0,0,0,.5),rgba(0,0,0,.75),rgba(0,0,0,0))}
+@keyframes selected{0%{color:#a19fbe}50%{color:rgba(255,255,255,.5);background:rgba(0,0,0,.5)}100%{color:#a19fbe}}
+.selected{-webkit-animation-name:selected;-webkit-animation-duration:1500ms;-webkit-animation-timing-function:ease-in-out;-webkit-animation-iteration-count:infinite}
+b{color:#d3d1f9;border-radius:2px;background:#4f4861}
+body{margin:4px;margin-top:192px;margin-bottom:128px;font:12px -apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Ubuntu,Roboto,"Helvetica Neue",sans-serif;color:#4f4861;background:#e3d1ff}
+z,b{margin-right:4px;padding:2px;transition:.1s}
+z{
+    font-size:11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display:block;
+    background:rgba(255,255,255,0.3);
+    padding:1px 2px;
+    margin-right:0;
 
-<div id=panel>
-	<div id=nav></div>
-	<div id=song-info>Not playing anything</div>
+    border-bottom:1px solid rgba(0,0,0,0.05);
+    border-right:1px solid rgba(0,0,0,0.12);
+}
+z[q]{
+    display:inline;
+    background:rgba(255,255,255,0.4);
+    padding:0 2px;
+    margin-right:3px;
+    overflow:visible;
+    font-size:14px;
+    border-bottom:1px solid rgba(0,0,0,0.12);
+    border-right:1px solid rgba(0,0,0,0.12);
+}
+y y {
+    overflow-y: auto;
+    max-height: 500px;
+}
+y,b {
+margin-right:0;
+display:block;
+-webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+          page-break-inside: avoid; /* Firefox */
+               break-inside: avoid; /* IE 10+ */
+}
+b[q]{margin-right:4px;font-size:14px;display:inline-block;}
+.col{column-gap: 4px; }
+@media (min-width: 400px) {
+  .col{column-count: 2;}
+}
+@media (min-width: 640px) {
+  .col{column-count: 4;}
+}
+@media (min-width: 1000px) {
+  .col{column-count: 6;}
+}
+@media (min-width: 1000px) {
+  .col{column-count: 6;}
+}
+@media (min-width: 1500px) {
+  .col{column-count: 7;}
+}
+@media (min-width: 1800px) {
+  .col{column-count: 8;}
+}
+z:hover{cursor:pointer;color:rgba(255,255,255,.5);background:rgba(0,0,0,.3)}
+div#n{font:bold 18px default;margin-bottom:2px}
+button{float:right;font-size:12px}
+div#overlay{
+    position:fixed;top:0;left:0;z-index:99999;
+    width:100%;
+    opacity:0.95;
+    transition:.15s;
+    padding:16px;
+    background:#E3D1FF;
+    color:#d3d1f9;background:#4f4861f5;
+    font-size:18px;
+}
+span.button{transition:.15s;text-align:center;width:40px;font-weight:bold;cursor:pointer;display:inline-block;border-radius:5px;color:#FFF;background:#211f29aa;font-size:18px;padding:2px 8px;margin:4px;}
+span#title{margin-right:8px;color:#FFF;font-size:26px;font-weight:bold;}
+span.button:hover{background:#a099b2;color:#393546;}
+span.button:active{color:#FFF;background:#211f29;}
+
+div#overlay:hover{opacity:1}
+</style>
+<meta charset=utf8><button>Delete Database</button>
+<div id=overlay>
+    <div id=song-info>No song playing.</div>
 </div>
-<div id=song-list></div>
-<script src=dir.js></script>
-<script src=index.js></script>
+
+<div id=n></div><hr><div id=out></div>
+<script>
+function replace(a,b){while(a.firstChild)a.removeChild(a.firstChild);a.appendChild(b)}
+function elem(e){var n=document.createDocumentFragment(),t=e[0],r=e[1];if("string"==typeof t&&(n=document.createElement(t)),"object"==typeof r)for(var a in r)n[a]=r[a];else r&&(n.innerHTML=r);for(var o=1;o<arguments.length;o++)arguments[o].nodeType>0&&n.appendChild(arguments[o]);return n}
+//indexedDB.deleteDatabase(WebAHX.dbName);
+var WebAHX = {
+    dbName: "WebAHX", dbKey: "tunes", path: "name",
+    list: undefined,
+    debug: document.querySelector("div#n"),
+    isLocal: document.location.protocol==="file:"
+}, l1 = 0, l2 = 0, selected;
+
+document.querySelector("button").onclick = function() {
+
+    
+    if(!confirm("Confirm deletion.")) {return false;}
+    indexedDB.deleteDatabase(WebAHX.dbName);
+    console.log("Deleted.");
+    window.location.reload();
+}
+
+WebAHX.rebuildUI = function(mode) {
+    var req = WebAHX.db.result.transaction(WebAHX.dbKey).objectStore(WebAHX.dbKey).getAll()
+    req.onsuccess = function(e) {
+        WebAHX.list = e.target.result;
+        if(mode===0) {
+            var content = elem([]);
+            for(var i = 0,u; i < WebAHX.list.length; i++) {
+                var s = e.target.result[i].name.split("/"); 
+                if(s[0] !== u) {
+                    u = s[0];
+                    if(i>0) {content.appendChild(elem(["hr"]))}
+                    var _b = elem(["b",s[0]]);
+                    _b.setAttribute('q','');
+                    content.appendChild(_b);
+                }
+                var row = elem(["z",{onclick:WebAHX.playSong, Q:i, innerHTML: s[s.length-1] }]);
+                row.setAttribute('q','');
+                content.appendChild(row);
+            }
+            var elm =document.querySelector("div#out");
+            elm.className = '';
+            replace(elm, content);
+        } else if(mode===1) {
+            var content = elem([]);
+            for(var bl0c,bl0c2,i = 0,u; i < WebAHX.list.length; i++) {
+                var s = e.target.result[i].name.split("/"); 
+                if(s[0] !== u) {
+                    u = s[0];
+                    bl0c = elem(["y"]);
+                    bl0c2 = elem(["y"]);
+                    var _b = elem(["b",s[0]]);
+                    bl0c.appendChild(_b);
+                    bl0c.appendChild(bl0c2);
+                    content.appendChild(bl0c);
+                }
+                var row = elem(["z",{onclick:WebAHX.playSong, Q:i, innerHTML: s[s.length-1] }]);
+                bl0c2.appendChild(row);
+            }
+            var elm =document.querySelector("div#out");
+            elm.className = 'col';
+            replace(elm, content);
+        }
+
+        WebAHX.debug.innerHTML = WebAHX.list.length+" tunes";
+    }
+};
+
+WebAHX.loadData = function (fname, data) {
+    var x = WebAHX.db.result.transaction(WebAHX.dbKey,"readwrite").objectStore(WebAHX.dbKey).
+    add({data: data, name: fname});
+    x.onsuccess = function() {
+        l2++;
+        WebAHX.debug.innerHTML = "<span class=selected>Loading files into storage... "+ l2 + "/" + l1 + "</span>";
+        if(l2===l1) {WebAHX.rebuildUI(1); WebAHX.innerHTML = "";}
+    }
+};
+
+WebAHX.readFiles = function(e) {
+    var files = e.target.files || e.dataTransfer.files;
+    JSZip.loadAsync(files[0]).then(function(zip) {
+        function insert(file) {
+            if(file.substr(-4) === ".ahx") {
+                zip.file(file).async("arraybuffer").then(function(buf) {
+                   WebAHX.loadData(file.slice(4, -4), buf);
+                   l1++;
+                });
+            }
+        }
+        var keys = Object.keys(zip.files), len = keys.length;
+        for(var i = 0; i < len; i++) insert(keys[i]);
+    });
+    e.preventDefault();
+};
+
+var lol, lol2;
+WebAHX.playSong = function() {
+    var uri = URL.createObjectURL(new Blob([WebAHX.list[this.Q].data]));
+    WebAHX.Song = new AHXSong();
+    WebAHX.Song.SizeBytes = WebAHX.list[this.Q].data.byteLength;
+    WebAHX.Song.LoadSong(uri, function() {
+        WebAHX.Master.Output.pos = [0,0,0,0];
+        WebAHX.Master.Play(WebAHX.Song);
+        URL.revokeObjectURL(uri);
+        document.title = name[name.length-1]+"/"+name[0];
+        console.log(`Playing song: ${document.title}`);
+        var currentSong = document.querySelector("#song-info");
+        currentSong.innerHTML = '<span id=title>' + (WebAHX.Song.Name.split('\0')[0]||"<i>No Title</i>") + "</span> " + name[0] + '<br><span id=ins></span><br>';
+
+
+    var stopButton = document.createElement('span');
+        stopButton.innerHTML='Stop';
+        stopButton.className='button';
+        stopButton.onclick = function(){
+            if(this.innerHTML=='Stop')
+            {
+                WebAHX.Master.Stop();
+                this.innerHTML='Play';
+            } else
+            {
+                WebAHX.Master.Play(WebAHX.Song);
+                this.innerHTML='Stop';
+            }
+        }
+        currentSong.appendChild(stopButton);
+
+        var slider2 = document.createElement('input');
+        slider2.type = "range";
+        slider2.min = 0;
+        slider2.value = WebAHX.Master.Output.Player.MainVolume;
+        slider2.style.width = "64px";
+        slider2.max = 64;
+        slider2.oninput = function()
+        {
+            WebAHX.Master.Output.Player.MainVolume = parseInt(this.value);
+        }
+
+        var slider = document.createElement('input');
+        slider.type = "range";
+        slider.min = 0;
+        slider.value = 0;
+        slider.style.width = "250px";
+        slider.title = WebAHX.Song.PositionNr;
+        slider.max = WebAHX.Song.PositionNr-1;
+        slider.onchange = function()
+        {
+            WebAHX.Master.Output.Player.NoteNr = 0;
+            WebAHX.Master.Output.Player.PosNr = parseInt(this.value);
+        }
+        slider.onmouseup = function() { this.blur(); }
+        
+        clearInterval(lol);
+        lol = setInterval(function(){
+            
+            if(WebAHX.Master.Output.Player.Playing && slider !== document.activeElement)
+            {
+                slider.value = WebAHX.Master.Output.Player.PosNr;
+            }
+        }, 25);
+        clearInterval(lol2);
+        pad=(i,x=3,y=0)=>{return`${i}`.padStart(x,y)}
+        function doop() {
+            var cnt = WebAHX.Song.Instruments.length;
+            if(num===cnt) {num = 1;}
+            document.querySelector("#ins").innerHTML = `${WebAHX.Song.PositionNr} positions (trackLength=${WebAHX.Song.TrackLength}), ${WebAHX.Song.SizeBytes} bytes<br>Instrument ${pad(num,2,'0')}/${pad(cnt-1,2,'0')}: <span style='color:#FFF;font-weight:bold'>${(WebAHX.Song.Instruments[num++].Name||"")}</span>`;
+        }
+        var num=1;
+        doop();
+        lol2 = setInterval(function(){
+            
+            doop();
+        }, 1000);
+        
+        currentSong.appendChild(slider);
+        currentSong.appendChild(slider2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    });
+    var name = WebAHX.list[this.Q].name.split("/");
+    if(selected) selected.removeAttribute("class")
+    selected = this; this.className = "selected"; 
+};
+
+WebAHX.init = function() {
+    window.addEventListener("dragover", function(e) {e.preventDefault()});
+    window.addEventListener("drop", WebAHX.readFiles);
+    WebAHX.Master = AHXMaster();
+    WebAHX.Song = undefined;
+    WebAHX.db = indexedDB.open(WebAHX.dbName);
+    WebAHX.db.onsuccess = function() { console.log("IDB Success");WebAHX.rebuildUI(1);};
+    WebAHX.db.onupgradeneeded = function(e) {
+        console.log("Creating dbKey");
+        e.target.result.createObjectStore(WebAHX.dbKey, {keyPath: WebAHX.path});
+    };
+};
+WebAHX.init();
+</script>
