@@ -12,6 +12,27 @@
 
 	
 
+	---- Changelog ----
+	Modified Aug 30 2020 - Additional check for Tempo (bryc)
+	---------------------------
+  * This fixes an edge case when F00 is used with voice data.
+    Thanks to pachuco for finding it:
+    https://github.com/pete-gordon/hivelytracker/issues/40#issuecomment-683404896
+    
+    Normally F00 is never used with any voice parameters, but
+    a small number of known files are affected by this condition:
+    Yelm - Oldskoolcrackintrosong
+    Varthall - this creamy nation
+    Miao - logo
+    Jazz (NL) - jingles (NOTE: occurs beyond end point)
+    Jazz (NL) - hawaii-balls (NOTE: occurs beyond end point)
+    Mermaid - kingkong (NOTE: occurs beyond end point)
+    Syphus - last tense (NOTE: occurs in unused pattern #9)
+	---------------------------
+	Modified Jun 21 2020 - webkitAudioContext compatibility (bryc)
+	---------------------------
+  * Use webkitAudioContext when needed - Supports Safari and older browsers
+    ---------------------------
 	Modified Oct 03 2016 - decodeURI -> decodeURIComponent (bryc)
 	---------------------------
   * Reverting but fixing the case for #
@@ -42,6 +63,7 @@
 var toSixtyTwo = function(a){ if(a < 0) {a = 0;} else if (a > 62) { a = 62; } return a;} 
 
 function AHXMaster() {
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
 	if(typeof(AudioContext) != 'undefined')
 		return new AHXMasterWebKit();
 	else if(typeof(new Audio().mozSetup) != 'undefined')
@@ -635,7 +657,7 @@ function AHXPlayer(waves) {
 		},
 		
 		PlayIRQ: function() {
-			if(this.StepWaitFrames <= 0) {
+			if(this.Tempo > 0 && this.StepWaitFrames <= 0) {
 				if(this.GetNewPosition) {
 					var NextPos = (this.PosNr+1==this.Song.PositionNr)?0:(this.PosNr+1);
 					if(this.PosNr >= this.Song.Positions.length){
